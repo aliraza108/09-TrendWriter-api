@@ -6,7 +6,7 @@ from sqlalchemy.orm import DeclarativeBase
 
 import os
 
-_raw_url = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./trendwriter.db").strip().strip('"').strip("'")
+_raw_url = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./trendwriter.db")
 
 # Normalize Neon/Supabase URLs automatically
 if _raw_url.startswith("postgres://"):
