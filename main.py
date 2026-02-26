@@ -21,6 +21,11 @@ load_dotenv()
 
 # ── SDK / Gemini config (mirrors your scraper pattern) ────────────────────────
 api_key = os.getenv("GEMINI_API_KEY")
+if not api_key:
+    raise RuntimeError("GEMINI_API_KEY is not set.")
+
+# Tell the openai-agents SDK to not look for OPENAI_API_KEY
+os.environ.setdefault("OPENAI_API_KEY", api_key)
 client = AsyncOpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
     api_key=api_key,
