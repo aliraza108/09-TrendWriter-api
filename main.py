@@ -19,13 +19,12 @@ from routers import content, schedule, publish, analytics, strategy, users
 
 load_dotenv()
 
-# ── SDK / Gemini config (mirrors your scraper pattern) ────────────────────────
 api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
-    raise RuntimeError("GEMINI_API_KEY is not set.")
+    raise RuntimeError("GEMINI_API_KEY environment variable is not set.")
 
-# Tell the openai-agents SDK to not look for OPENAI_API_KEY
-os.environ.setdefault("OPENAI_API_KEY", api_key)
+os.environ.setdefault("OPENAI_API_KEY", api_key)  # ← this line fixes the crash
+
 client = AsyncOpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
     api_key=api_key,
@@ -33,7 +32,6 @@ client = AsyncOpenAI(
 set_default_openai_api("chat_completions")
 set_default_openai_client(client=client)
 set_tracing_disabled(True)
-
 
 # ── Lifespan ──────────────────────────────────────────────────────────────────
 @asynccontextmanager
